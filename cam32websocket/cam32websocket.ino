@@ -40,13 +40,14 @@ void webSocketEvent(WStype_t type, uint8_t * payload, size_t length) {
       break;
     case WStype_CONNECTED: {
       Serial.printf("[WSc] Connected to url: %s\n", payload);
+      webSocket.sendTXT("camlogin");
     }
       break;
     case WStype_TEXT:
       Serial.printf("[WSc] get text: %s\n", payload);
       break;
     case WStype_BIN:
-      Serial.printf("[WSc] get binary length: %u\n", length);
+//      Serial.printf("[WSc] get binary length: %u\n", length);
       break;
     case WStype_PING:
         // pong will be send automatically
@@ -128,7 +129,7 @@ void loop() {
     webSocket.loop();
     uint64_t now = millis();
 
-    if(now - messageTimestamp > 30) {
+    if(now - messageTimestamp > 10) {
         messageTimestamp = now;
 
         camera_fb_t * fb = NULL;
